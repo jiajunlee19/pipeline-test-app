@@ -1,3 +1,5 @@
+# https://stackoverflow.com/questions/34076036/automated-deployment-from-bitbucket-to-iis-on-windows-server
+# https://support.atlassian.com/bitbucket-cloud/docs/deploy-using-scp/
 pipelines:
   branches: #Branch-specified pipelines
     master:
@@ -15,11 +17,23 @@ pipelines:
           runs-on: 
             - self.hosted
           script:
-            - pipe: atlassian/ssh-run:0.8.0
+            - pipe: atlassian/scp-deploy:latest
               variables:
-                SSH_USER: daniel
-                SERVER: intranet-address
-                COMMAND: echo hello
-
+                USER: $USER
+                SERVER: $SERVER
+                REMOTE_PATH: $REMOTE_PATH
+                LOCAL_PATH: 'build/*'
+                DEBUG: 'true'
+      - step:
+          name: Running batch script
+          cache: docker
+          script:
+            - pipe: docker://accessefm/bat-script-runner:latest
+              variables:
+              HOST: $SERVER
+              USER: $USER
+              PORT: $PORT
+              SCRIPT_REMOTE_PATH: $DEPLOY_SCRIPT_PATH
+              ARGUMENTS: '$SRC $DEST'
   # default: #Pipelines that doesn't match any other definitions
   # custom: #Pipelines that runs manually
