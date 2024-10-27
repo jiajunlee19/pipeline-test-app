@@ -1,5 +1,7 @@
 # https://stackoverflow.com/questions/34076036/automated-deployment-from-bitbucket-to-iis-on-windows-server
 # https://support.atlassian.com/bitbucket-cloud/docs/deploy-using-scp/
+# https://www.youtube.com/watch?v=mmexLa-o6E8
+
 pipelines:
   branches: #Branch-specified pipelines
     master:
@@ -25,7 +27,7 @@ pipelines:
                 LOCAL_PATH: 'build/*'
                 DEBUG: 'true'
       - step:
-          name: Running batch script
+          name: Serving the website
           cache: docker
           script:
             - pipe: docker://accessefm/bat-script-runner:latest
