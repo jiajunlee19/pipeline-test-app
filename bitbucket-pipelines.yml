@@ -1,0 +1,25 @@
+pipelines:
+  branches: #Branch-specified pipelines
+    master:
+      - step:
+          name: Building the app
+          image: node:latest
+          script:
+            - npm install
+            - npm run build
+          artifacts:
+            - build/**
+      - step:
+          name: Deploying the app
+          deployment: production
+          runs-on: 
+            - self.hosted
+          script:
+            - pipe: atlassian/ssh-run:0.8.0
+              variables:
+                SSH_USER: daniel
+                SERVER: intranet-address
+                COMMAND: echo hello
+
+  # default: #Pipelines that doesn't match any other definitions
+  # custom: #Pipelines that runs manually
