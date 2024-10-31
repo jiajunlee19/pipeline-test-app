@@ -6,7 +6,7 @@ echo '[info] Deploying ...'
 
 echo '[info] npm run start'
 # npm run start
-sleep 300 &
+npm run start &
 sleep 1
 echo $! > .pidfile
 echo 'Current running pid is' $!
