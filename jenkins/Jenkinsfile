@@ -23,18 +23,4 @@ pipeline {
             }
         }
     }
-
-    post {
-        success {
-            mail to: 'lee19@live.cn',
-                subject: "Pipeline Succeeded: ${currentBuild.fullDisplayName}",
-                body: "Check it out with ${env.BUILD_URL} !"
-        }
-
-        failure {
-            mail to: 'lee19@live.cn',
-                subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
-                body: "Something is wrong with ${env.BUILD_URL} !"
-        }
-    }
 }
