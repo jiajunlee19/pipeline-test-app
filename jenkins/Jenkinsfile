@@ -23,4 +23,12 @@ pipeline {
             }
         }
     }
+
+    post {
+        failure {
+            mail to: 'lee19@live.cn',
+                subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
+                body: "Something is wrong with ${env.BUILD_URL} !"
+        }
+    }
 }
