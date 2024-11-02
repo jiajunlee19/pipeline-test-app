@@ -10,7 +10,7 @@ export default function Home() {
     return (
         <>
             <h1>Home</h1>
-            <p>This is your home page!</p>
+            <p>This is your home page! Hi !</p>
             {/* <Image
                 src="/desktop.png"
                 width={1000}
