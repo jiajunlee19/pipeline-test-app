@@ -4,8 +4,9 @@ set -e
 
 echo '[info] Killing existing listening port process ...'
 
-source ./.env
-echo '[info] PORT =' $PORT
+source ./.env || echo '[warn] Failed to read .env, fallback to default.'
+
+echo '[info] PORT =' ${PORT:-3000}
 portPID=$(netstat -ano | grep "LISTENING" | grep "TCP" | grep ":${PORT:-3000}" | awk '{print $5}' | sort -u)
 
 if [[ -z "${portPID}" ]]; then 
